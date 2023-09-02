@@ -1,6 +1,6 @@
 @page "/R_Prioridades"
 
-<EditForm Model="prioridad"> 
+<EditForm Model="prioridad" OnValidSubmit="Save"> 
 
     <div class="card">
 
@@ -23,7 +23,7 @@
             <!-- Para la desc -->
             <label class="form-label">Descripción</label>
             <InputText @bind-Value="prioridad.Descripcion" class="form-control"/>
-            
+            <ValidationMessage For="@(() => prioridad.Descripcion)" />
 
 
             <!-- Para la cantidad de dias -->
@@ -35,7 +35,7 @@
 
         <div class="card-footer">
             <button type="button" class="btn btn-primary">Nuevo</button>
-            <button type="button" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-success" @onclick="Save">Guardar</button>
             <button type="button" class="btn btn-danger">Eliminar</button>
         </div>
     </div>
@@ -44,4 +44,9 @@
 
 @code{
     public Prioridades prioridad { get; set; } = new Prioridades();
+
+    void Save()
+    {
+        
+    }
 }
