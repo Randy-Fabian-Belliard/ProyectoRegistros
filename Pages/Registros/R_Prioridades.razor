@@ -1,4 +1,5 @@
 @page "/R_Prioridades"
+@inject PrioridadesBLL PrioridadesBLL
 
 <EditForm Model="prioridad" OnValidSubmit="Save"> 
 
@@ -15,7 +16,7 @@
             <div id="inputId" class="input-group mb-3">
                 <InputNumber @bind-Value="prioridad.PrioridadId" class="form-control"/>
                 <div class="input-group-append">
-                <button class="btn btn-info" type="button"> <span class="oi oi-magnifying-glass"/></button>
+                <button class="btn btn-info" type="button" @onclick= "Buscar"> <span class="oi oi-magnifying-glass"/></button>
             </div>
 
         </div>
@@ -34,7 +35,7 @@
         </div>
 
         <div class="card-footer">
-            <button type="button" class="btn btn-primary">Nuevo</button>
+            <button type="button" class="btn btn-primary"@onclick="New">Nuevo</button>
             <button type="button" class="btn btn-success" @onclick="Save">Guardar</button>
             <button type="button" class="btn btn-danger">Eliminar</button>
         </div>
@@ -47,6 +48,24 @@
 
     void Save()
     {
+        if(PrioridadesBLL.Guardar(prioridad))
+            New();
         
+    }
+
+    void Buscar(){
+
+        var prioridadEncontrada = PrioridadesBLL.Buscar(prioridad.PrioridadId);
+
+        if(prioridadEncontrada != null)
+        {
+
+            this.prioridad = prioridadEncontrada; 
+        }
+    }
+
+    void New()
+    {
+        prioridad = new Prioridades();
     }
 }
