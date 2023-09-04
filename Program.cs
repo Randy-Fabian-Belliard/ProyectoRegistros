@@ -1,12 +1,22 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Leer la ConnectionStrings llamada "Constr" que puse en el appsettings.json
+var ConStr = builder.Configuration.GetConnectionString("ConStr");
+
+//Inyectar el contexto para que este disponible
+//En los  constructores donde lo solicitemos
+builder.Services.AddDbContext<Contexto>(options =>
+        options.UseSqlite(ConStr)
+);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddScoped<PrioridadesBLL>();
 
 var app = builder.Build();
 
