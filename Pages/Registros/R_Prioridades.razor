@@ -1,7 +1,7 @@
 @page "/R_Prioridades"
 @inject PrioridadesBLL PrioridadesBLL
 
-<EditForm Model="prioridad" OnValidSubmit="Save"> 
+<EditForm Model="prioridad" OnValidSubmit="Guardar"> 
 
     <div class="card">
 
@@ -30,14 +30,15 @@
             <!-- Para la cantidad de dias -->
             <label class="form-label">Dias de compromiso</label>
             <InputNumber @bind-Value="prioridad.DiasCompromiso" class="form-control"/>
+            <ValidationMessage For="@(() => prioridad.DiasCompromiso)" />
 
 
         </div>
 
         <div class="card-footer">
-            <button type="button" class="btn btn-primary"@onclick="New">Nuevo</button>
-            <button type="button" class="btn btn-success" @onclick="Save">Guardar</button>
-            <button type="button" class="btn btn-danger">Eliminar</button>
+            <button type="button" class="btn btn-primary"@onclick="New"><i class="oi oi-file" />Nuevo</button>
+            <button type="button" class="btn btn-success" @onclick="Guardar"><i class="oi oi-document" />Guardar</button>
+            <button type="button" class="btn btn-danger"@onclick = "Eliminar">Eliminar</button>
         </div>
     </div>
 
@@ -46,11 +47,13 @@
 @code{
     public Prioridades prioridad { get; set; } = new Prioridades();
 
-    void Save()
+    void Guardar()
     {
+     if(Validar())
+        {
         if(PrioridadesBLL.Guardar(prioridad))
             New();
-        
+        }
     }
 
     void Buscar(){
@@ -67,5 +70,16 @@
     void New()
     {
         prioridad = new Prioridades();
+    }
+
+    void Eliminar(){
+        if (PrioridadesBLL.Eliminar(prioridad)){
+            this.New();
+        }   
+
+    }
+    bool Validar()
+    {
+        return !(String.IsNullOrEmpty(prioridad.Descripcion) ) && prioridad.DiasCompromiso > 0;
     }
 }
