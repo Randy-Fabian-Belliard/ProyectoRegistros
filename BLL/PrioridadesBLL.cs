@@ -28,15 +28,14 @@ public class PrioridadesBLL
     public bool Guardar(Prioridades prioridad)
     {
         
-     if(prioridad.DiasCompromiso <31){
-
+     if(prioridad.DiasCompromiso <31 && !ExisteDescricion(prioridad.Descripcion))
+    {
             if(!Existe(prioridad.PrioridadId))
             return Insertar(prioridad);
         else
             return Modificar(prioridad);
         }
         return true;
-
     }
 
     public Prioridades? Buscar (int PrioridadId){
@@ -57,11 +56,15 @@ public class PrioridadesBLL
 
     }
 
-     public List<Prioridades> Listar(Expression<Func<Prioridades, bool>> Criterio){
+         public List<Prioridades> Listar(Expression<Func<Prioridades, bool>> Criterio){
         return _contexto.Prioridades
-            .Where(Criterio)
+         .Where(Criterio)
             .AsNoTracking().ToList();
     }
+    public bool ExisteDescricion( string desc){
 
+            return _contexto.Prioridades.Any( p => p.Descripcion == desc);
+
+            }
 
 }
