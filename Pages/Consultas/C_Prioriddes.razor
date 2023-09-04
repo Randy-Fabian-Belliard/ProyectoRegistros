@@ -1,0 +1,43 @@
+@page "/ConsultaPrioridades"
+
+@inject PrioridadesBLL PrioridadesBLL
+
+
+<table class = "table table-bordered" > 
+
+<thead>
+
+    <tr>
+
+        <th>Prioridad ID </th> 
+        <th>Descipcion </th> 
+        <th>Dias de compromiso </th> 
+        
+    </tr>
+
+ </thead>
+ <tbody>
+
+@foreach (var item in prioridades){
+
+    <tr>
+
+        <td> @item.PrioridadId</td>
+        <td> @item.Descripcion</td> 
+        <td> @item.DiasCompromiso</td>  
+    ></tr>    
+}   
+
+    </tbody>
+</table>
+
+@code{
+
+     public List<Prioridades> prioridades { get; set; } = new List<Prioridades>(); 
+        
+            protected override void OnInitialized()
+            {
+                prioridades = PrioridadesBLL.Listar(c => true); 
+            }
+}
+
