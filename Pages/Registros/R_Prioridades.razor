@@ -1,5 +1,6 @@
 @page "/R_Prioridades"
 @inject PrioridadesBLL PrioridadesBLL
+@inject NavigationManager Nm
 
 <EditForm Model="prioridad" OnValidSubmit="Guardar"> 
 
@@ -53,7 +54,9 @@
         {
         if(PrioridadesBLL.Guardar(prioridad))
             New();
+            Nm.NavigateTo( "/R_Prioridades");
         }
+
     }
 
     void Buscar(){
@@ -76,7 +79,7 @@
         if (PrioridadesBLL.Eliminar(prioridad)){
             this.New();
         }   
-
+     Nm.NavigateTo( "/R_Prioridades");
     }
     bool Validar()
     {
